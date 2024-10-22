@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Buddy Pikachu!</title>
+
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.3.2/aframe/build/aframe-ar.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r123/examples/js/loaders/DRACOLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r123/examples/js/loaders/GLTFLoader.js"></script>
+
+    <style>
+        #siteName{
+            top:-10px !important;
+        }
+        .logo {
+            position: absolute; /*Place it over the video feed */
+            top: 0px; 
+            left: 15 px; 
+            z-index: 1000; /* Making sure it stays on top */
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 200px;
+            height: auto;
+            z-index: 2;
+        }
+        
+        /* Add hover effect */
+        .logo:hover img {
+            transform: scale(1.1); 
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        #webcam {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            display: none; /* Initially hidden */
+        }
+        a-scene {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 2; /* To put the AR content is on top*/
+        }
+    </style>
+</head>
+<body>
+
+
+
+
+    <video id="webcam" autoplay playsinline></video>
+    
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: true;">
+        <a-assets>
+            <!-- Loading the Draco compressed model - My Sleeping Pikachu Model was Draco Compressed-->
+            <a-asset-item id="pika" src="assets/pika.glb"></a-asset-item>
+            <!-- Second Pikachu Model -->>
+            <a-asset-item id="pika2" src="assets/Pikachu2.glb"></a-asset-item>
+        </a-assets>
+
+        <!--I tested with the hiro marker initially-->
+        <!-- <a-marker-camera preset="hiro"></a-marker-camera> -->
+        <!--Using Pokeball Marker Image with Custom Pattern-->
+        <a-marker type='pattern' url='assets/pokeball_pattern.patt' id="marker1">
+            <a-entity id="pika-model" 
+            position="0 0 0" 
+            scale="0.1 0.1 0.1" 
+            rotation="0 0 0">
+            <a-light type="point" position="6 4 4" intensity="1.5" color="#FFF">
+                <a-animation attribute="light.intensity" to="2" dur="90000" repeat="indefinite" easing="linear"></a-animation>
+            </a-light>
+        </a-entity>
+        </a-marker>
+
+
+        <a-marker type="pattern" url="assets/pika_pattern.patt">
+            <!-- Using Second Pikachu Model for the Pikachu-Pokemon-Card Marker-->
+            <a-entity 
+                gltf-model="#pika2"  
+                position="0 0 0" 
+                scale="1.5 1.5 1.5" 
+                rotation="90 270 90">
+                <a-light type="ambient" color="#FFF" intensity="1"></a-light>
+
+            </a-entity>
+        </a-marker>
+
+        <a-marker-camera></a-marker-camera>
+    </a-scene>
+
+    <!--The Website Name and Logo-->
+    <div class="logo">
+        <img  src="assets/pikachu-wave.gif" alt="Pikachu Title GIF"> 
+        <img  id= "siteName" src="assets/name.png" alt="Pikachu PNG">
+    </div>  
+
+    
+    <script>
+        // To use DracoModel
+        AFRAME.registerComponent('gltf-draco-model', {
+            schema: { type: 'model' },
+      
+            init: function () {
+                var loader = new THREE.GLTFLoader();
+                // Set up the Draco loader
+                var dracoLoader = new THREE.DRACOLoader();
+                dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/gh/mrdoob/three.js@r123/examples/js/libs/draco/');
+                loader.setDRACOLoader(dracoLoader);
+      
+                var el = this.el;
+                var src = this.data;
+      
+                loader.load(src, function (gltf) {
+                  el.setObject3D('mesh', gltf.scene);
+                });
+            }
+        });
+    
+        // Attach the Draco model to the entity (Sleeping Pikachu Model)
+        document.getElementById('pika-model').setAttribute('gltf-draco-model', '#pika');
+    
+        // Handle marker visibility (Model should not be visible when the marker is removed from scene)
+        var marker1 = document.querySelector("#marker1");
+        marker1.addEventListener('markerFound', function() {
+            document.getElementById('pika-model').setAttribute('visible', true);
+        });
+    
+        marker1.addEventListener('markerLost', function() {
+            document.getElementById('pika-model').setAttribute('visible', false);
+        });
+    </script>
+
+
+
+    <script>
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                const video = document.getElementById('webcam');
+                video.srcObject = stream;
+                video.style.display = 'block'; // Make video visible
+            })
+            .catch(err => {
+                console.error('Error accessing webcam:', err);
+            });
+    </script>
+</body>
+</html>
