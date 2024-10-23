@@ -2,6 +2,29 @@
 
 ###
 
-<h4 align="left">Live Link : my-buddy-pikachu.web.app <br><br>Marker 1 : Pokeball<br>Marker 2 :  Pokemon Card</h4>
+<h4 align="left"> <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Live Link: <a href="https://my-buddy-pikachu.web.app">my-buddy-pikachu.web.app</a>  <br><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Marker 1 : <a href="https://github.com/user-attachments/assets/c35c2791-53a5-4295-8a6f-7c289db3e74f">Pokeball</a> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Marker 2 :  <a href = "https://github.com/user-attachments/assets/ee129072-d8fc-498a-8efe-ad87dd64f5d1" > Pokemon Card </a></h4>
 
 ###
+<br>
+A Mini-WebXR project to interact with AR markers to view and manipulate 3D models of Pikachu. This project uses AR.js, A-Frame, and is deployed using Firebase. It is designed to run on WebXR-supported browsers and devices with AR capabilities.
+
+
+### Features
+
+- View 3D Pikachu models using AR markers.
+- Interact with multiple markers to load different models.
+- Smooth animations with model rotation and lighting effects.
+- Responsive and easy-to-use interface for both desktop and mobile browsers.
+- Firebase hosting for easy sharing and deployment.
+
+
+### Instructions
+- Open the live demo link on a WebXR-supported browser.
+- Point the camera at the AR markers (patterns are provided above).
+- Models will appear based on the marker pattern detected.
+
+### Notes
+- Ensure that the markers are well-lit and clearly visible to the camera. Try increasing marker size or improving lighting conditions.
+- Confirm that you're using a browser that supports WebXR (e.g., Chrome, Firefox).
+- Allow camera access when prompted by the browser.
+- Confirm your device supports AR.
