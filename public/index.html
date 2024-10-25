@@ -10,60 +10,18 @@
     <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r123/examples/js/loaders/DRACOLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r123/examples/js/loaders/GLTFLoader.js"></script>
 
-    <style>
-        #siteName{
-            top:-10px !important;
-        }
-        .logo {
-            position: absolute; /*Place it over the video feed */
-            top: 0px; 
-            left: 15 px; 
-            z-index: 1000; /* Making sure it stays on top */
-            display: flex;
-            align-items: center;
-        }
+    <link rel="stylesheet" href="styles.css">
 
-        .logo img {
-            width: 200px;
-            height: auto;
-            z-index: 2;
-        }
-        
-        /* Add hover effect */
-        .logo:hover img {
-            transform: scale(1.1); 
-        }
-
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-        }
-        #webcam {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 1;
-            display: none; /* Initially hidden */
-        }
-        a-scene {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 2; /* To put the AR content is on top*/
-        }
-    </style>
 </head>
 <body>
 
+    <!-- Adding my fav Pokemon Game Music -->
+    <audio id="background-music" autoplay loop >
+        <source src="assets/bgMusic.mp3" type="audio/mpeg">
+    </audio>
+    
 
-
-
-    <video id="webcam" autoplay playsinline></video>
+    <!-- <video id="webcam" autoplay playsinline></video> -->
     
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: true;">
         <a-assets>
@@ -92,9 +50,11 @@
             <!-- Using Second Pikachu Model for the Pikachu-Pokemon-Card Marker-->
             <a-entity 
                 gltf-model="#pika2"  
-                position="0 0 0" 
-                scale="1.5 1.5 1.5" 
-                rotation="90 270 90">
+                position="0 -4 -2" 
+                scale="2.5 2.5 2.5" 
+                rotation="90 270 90"
+                animation="property: rotation; to: 450 270 90; loop: true; dur: 5000; easing: linear"></a-entity>>
+                
                 <a-light type="ambient" color="#FFF" intensity="1"></a-light>
 
             </a-entity>
@@ -106,8 +66,66 @@
     <!--The Website Name and Logo-->
     <div class="logo">
         <img  src="assets/pikachu-wave.gif" alt="Pikachu Title GIF"> 
-        <img  id= "siteName" src="assets/name.png" alt="Pikachu PNG">
+
+        <div>        
+            <img  id= "siteName" src="assets/name.png" alt="Pikachu PNG">
+            <button id="toggleBtn">Show Info</button>
+        </div>
+
+        <div id="info" >
+            <p>Marker 1 : 
+            <a href="https://github.com/user-attachments/assets/c35c2791-53a5-4295-8a6f-7c289db3e74f" target="_blank">Pokeball</a></p> 
+            <p>Marker 2 : 
+            <a href="https://github.com/user-attachments/assets/ee129072-d8fc-498a-8efe-ad87dd64f5d1" target="_blank">Pokemon Card</a></p>
+            <p>For More Details :
+            <a href="https://github.com/fairuznawar122/MyBuddyPikachu-WebXR" target="_blank" >Click Here</a> </p>
+        </div>
+        
     </div>  
+    
+    
+    
+    <script>
+        // Show Info Button Toggle
+        const button = document.getElementById('toggleBtn');
+        const infoDiv = document.getElementById('info');
+        let isVisible = false; // Initially hidden
+
+        button.addEventListener("click", function () {
+      isVisible = !isVisible; // Toggle the visibility state
+      if (isVisible) {
+        infoDiv.style.display = "block";
+      } else {
+        infoDiv.style.display = "none";
+      }
+      
+    });
+    // Ensure the content is hidden on page load (or already done in CSS)
+    infoDiv.style.display = "none";
+    </script>
+
+
+    <script>
+        const renderer = new THREE.WebGLRenderer({ alpha: true }); // Make sure to keep alpha true for transparency
+        document.body.appendChild(renderer.domElement);
+
+        const audio = document.getElementById('background-music');
+
+        // Setting volume right after the audio is ready to play
+        audio.addEventListener('canplaythrough', () => {
+            audio.volume = 0.2; // Set volume to 20%
+            audio.play().catch(error => console.error("Playback failed:", error));
+        });
+
+        // Optionally handle audio context state
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioContext.state === 'suspended') {
+            audioContext.resume().then(() => {
+                audio.play();
+            });
+        }
+
+    </script>
 
     
     <script>
@@ -144,7 +162,6 @@
             document.getElementById('pika-model').setAttribute('visible', false);
         });
     </script>
-
 
 
     <script>
