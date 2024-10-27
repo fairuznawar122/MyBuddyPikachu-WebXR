@@ -19,6 +19,9 @@ A Mini-WebXR project to interact with AR markers to view and manipulate 3D model
 
 
 ### Instructions
+- Enable WebXR and WebRTC settings from chrome://flags/  
+![Screenshot_1](https://github.com/user-attachments/assets/3c317c8a-b321-4b36-b637-aa23f6062bff)
+
 - Open the live demo link on a WebXR-supported browser.
 - Point the camera at the AR markers (patterns are provided above).
 - Models will appear based on the marker pattern detected.
