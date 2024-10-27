@@ -1,3 +1,58 @@
+/* Default styles for larger screens */
+.container {
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* Medium-sized screens (e.g., tablets, small laptops) */
+@media (min-width: 700px) and (max-width: 1024px) {
+    .container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .logo img {
+        width: 20vw; /* Adjust logo size for smaller screens */
+    }
+    .your-element {
+        width: 100vw; /* Full width on mobile */
+        height: auto; /* Scales proportionally */
+    }
+    
+}
+@media (min-width: 700px) and (max-width: 1024px)  and (orientation: landscape) {
+    .your-element {
+        width: 100vw;
+        height: auto;
+    }
+    .logo img {
+        width: 20vw; /* Adjust logo size for smaller screens */
+    }
+}
+
+/* Small screens (e.g., phones) */
+@media only screen and (max-width: 690px) {
+   
+    .your-element {
+        width: 100vw; /* Full width on mobile */
+        height: auto; /* Scales proportionally */
+    }
+    .logo img {
+        width: 10vw; /* Adjust logo size for smaller screens */
+    }
+}
+
+/* Specific adjustments for landscape mode on phones */
+@media only screen and (max-width: 600px) and (orientation: landscape) {
+    .your-element {
+        width: 100vw;
+        height: auto;
+    }
+}
+
+
 @font-face {
     font-family: 'PokemonSolid';
     src: url('assets/pokemonFont.ttf') format('truetype');
@@ -25,6 +80,7 @@ audio {
     text-decoration:none;
     font-family: 'PokemonSolid', sans-serif;
 }
+
 #toggleBtn:hover {
     background-color:#ffcc23f8;
 }
@@ -32,7 +88,17 @@ audio {
     position:relative;
     top:2px;
 }
+video {
+    object-fit: cover; /* Cover the screen without distortion */
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
 
+  
 
 #info {
     display: none; /* Hidden by default */
@@ -48,9 +114,10 @@ audio {
 }
 
 .logo {
-    position: absolute; /*Place it over the video feed */
-    top: 0px; 
-    left: 15 px; 
+    position: absolute;
+     /*Place it over the video feed */
+    top: 0vh; 
+    left: 0vw; 
     z-index: 1000; /* Making sure it stays on top */
     display: flex;
     align-items: center;
@@ -67,10 +134,11 @@ audio {
     transform: scale(1.1); 
 }
 
-body, html {
+html, body {
+    width: 100%;
+    height: 100%;
     margin: 0;
     padding: 0;
-    height: 100%;
     overflow: hidden;
     font-family: 'PokemonSolid', sans-serif;
 }
@@ -78,13 +146,16 @@ body, html {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: auto;
+    /* height: 100%; */
     z-index: 10;
     display: none; /* Initially hidden */
 }
 a-scene {
-    width: 100%;
-    height: 100%;
-    z-index: 20; /* To put the AR content is on top*/
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
 }
